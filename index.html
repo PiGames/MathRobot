@@ -1,83 +1,131 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
-    <link rel="stylesheet" href="./css/mathquill.css">
-    <link rel="stylesheet" href="./css/style.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style media="screen">
+      body {
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+      }
+
+      main {
+        flex: 1 0 auto;
+      }
+
+      .footer-text {
+        margin: 0;
+      }
+
+      .page-footer {
+        padding-top: 0;
+      }
+    </style>
   </head>
   <body>
-    <div class="container">
-      <div class="row">
-        <div class="equation-container col-12 pr-0 pl-0">
-          <span id="equation"></span>
-        </div>
+    <nav class="pink lighten-2" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">MathRobot</a>
+      <!-- <ul class="right hide-on-med-and-down">
+        <li><a href="#">Navbar Link</a></li>
+      </ul>
+
+      <ul id="nav-mobile" class="side-nav">
+        <li><a href="#">Navbar Link</a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+      -->
+    </div>
+  </nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <main class="container">
+    <h2>Socket.io tester</h2>
+    <div class="row">
+      <div class="input-field col s12">
+        <button class="btn waves-effect waves-light" id="joinroom" name="action">Join room pi-1</button>
+      </div>
+      <div class="input-field col s12">
+        <button class="btn waves-effect waves-light" id="evaluate" name="action">Evaluate equation (3^2)*5+1</button>
+      </div>
+      <div class="input-field col s12">
+        <button class="btn waves-effect waves-light" id="clear" name="action">Clear queue</button>
+      </div>
+      <div class="input-field col s12">
+        <button class="btn waves-effect waves-light" id="next" name="action">Next robot step</button>
       </div>
     </div>
+    <br>
 
-    <div class="container buttons-container pt-3 pb-3">
-      <div class="row">
-        <div class="col-sm-6 col-6 pr-1">
-          <div class="d-flex">
-            <div class="calc-btn" data-function="7">7</div>
-            <div class="calc-btn" data-function="8">8</div>
-            <div class="calc-btn" data-function="9">9</div>
-            <div class="calc-btn" data-function="\frac{ }{ }">\div</div>
-          </div>
-          <div class="d-flex">
-            <div class="calc-btn" data-function="4">4</div>
-            <div class="calc-btn" data-function="5">5</div>
-            <div class="calc-btn" data-function="6">6</div>
-            <div class="calc-btn" data-function="\cdot">\times</div>
-          </div>
-          <div class="d-flex">
-            <div class="calc-btn" data-function="1">1</div>
-            <div class="calc-btn" data-function="2">2</div>
-            <div class="calc-btn" data-function="3">3</div>
-            <div class="calc-btn" data-function="-">-</div>
-          </div>
-          <div class="d-flex">
-            <div class="calc-btn" data-function="0">0</div>
-            <div class="calc-btn" data-function=".">.</div>
-            <div class="calc-btn" data-function="ans">\textup{ans}</div>
-            <div class="calc-btn" data-function="+">+</div>
-          </div>
-        </div>
+    <div id="queue"></div>
+    <p id="current-step"></p>
+  </main>
 
-        <div class="col-sm-6 col-6 pl-1">
-          <div class="d-flex">
-            <div class="calc-btn" data-function="^2">a^2</div>
-            <div class="calc-btn" data-function="^{ }">a^b</div>
-            <div class="calc-btn" data-function="\frac{ }{ }">\frac{a}{b}</div>
-            <div class="calc-btn" data-function="del">\textup{del}</div>
-          </div>
-          <div class="d-flex">
-            <div class="calc-btn" data-function="\sqrt{ }">\sqrt{ }</div>
-            <div class="calc-btn" data-function="\sqrt[ ]{ }">\sqrt[n]{ }</div>
-            <div class="calc-btn" data-function="\left(\right)">()</div>
-            <div class="calc-btn" data-function="!">!</div>
-          </div>
-          <div class="d-flex">
-            <div class="calc-btn" data-function="sin">sin</div>
-            <div class="calc-btn" data-function="cos">cos</div>
-            <div class="calc-btn" data-function="tan">tan</div>
-            <div class="calc-btn" data-function="\pi">\pi</div>
-          </div>
-          <div class="d-flex">
-            <div class="calc-btn" data-function="\left|\right|">\left|a\right|</div>
-            <div class="calc-btn" data-function="ln">ln</div>
-            <div class="calc-btn" data-function="%">%</div>
-            <div class="calc-btn" data-function="enter">\textup{enter}</div>
-          </div>
-        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <footer class="page-footer pink lighten-2">
+    <div class="footer-copyright">
+      <div class="container">
+        <p class="footer-text">
+          Made by <a class="pink-text text-darken-4" href="http://pigam.es">PiGames</a>
+        </p>
       </div>
     </div>
+  </footer>
 
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js" charset="utf-8"></script>
-    <script src="./js/mathquill.js" charset="utf-8"></script>
-    <script src="./js/TeXZilla.js" charset="utf-8"></script>
+
+
+
+    <!-- <form id="form" id="chat_form">
+      <p><strong>Name</strong></p>
+      <input id="name" type="text">
+      <br>
+      <p><strong>Data</strong></p>
+      <input id="data" type="text">
+      <br>
+      <br>
+      <input type="submit" value="Send">
+    </form> -->
+
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
     <script src="./js/script.js" charset="utf-8"></script>
   </body>
 </html>

@@ -1,44 +1,45 @@
-const MQ = MathQuill.getInterface(2);
+var socket = io.connect('http://localhost:4200');
 
-const isiOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
+socket.on('connect', function(data) {
+  $( '#joinroom' ).click( () => {
+    socket.emit('join room', 'pi-1');
 
-const config = {
-  autoCommands: 'pi sqrt',
-  handlers: {
-    edit: function() {
-      var enteredMath = answerMathField.latex(); // Get entered math in LaTeX format
-      console.log( TeXZilla.toMathML( enteredMath ).querySelector( "semantics > :first-child" ), enteredMath );
-    }
-  },
-}
-
-if ( isiOS ) {
-  config.substituteTextarea = () => document.createElement("span")
-}
-
-const answerSpan = document.getElementById('equation');
-const answerMathField = MQ.MathField(answerSpan, config );
-
-const btns = document.querySelectorAll( ".calc-btn" );
-btns.forEach( ( btn ) => {
-  MQ.StaticMath( btn );
-  btn.addEventListener( "click", function() {
-    const func = btn.dataset.function;
-    switch (func) {
-      case "del": {
-        answerMathField.focus();
-        answerMathField.keystroke('Backspace');
-        break;
-      }
-      case "enter": {
-        answerMathField.focus();
-        answerMathField.keystroke('Enter');
-        break;
-      }
-      default: {
-        answerMathField.focus();
-        answerMathField.write( func );
-      }
-    }
+    socket.on('join room response', d => {
+      console.log( d );
+    })
   } );
-} );
+
+  $( '#evaluate' ).click( () => {
+    socket.emit('evaluate', "3^2\cdot5+1");
+  } );
+
+  $( '#clear' ).click( () => {
+    socket.emit('clear queue');
+  } );
+
+  socket.on( 'queue changed', queue => {
+    console.log( queue );
+
+    $("#queue").html( JSON.stringify( queue ) );
+  } );
+
+  socket.on( 'robot step', step => {
+    console.log( step );
+
+    $("#current-step").html( step );
+  } );
+
+  socket.on( 'robot done', results => {
+    console.log( results.result );
+
+    $("#current-step").html( `Result: ${ results.result }` );
+  } );
+
+  socket.on( 'evaluate error', err => {
+    $("#current-step").html( `Error: ${err}` );
+  } );
+
+  $( '#next' ).click( () => {
+    socket.emit('next step');
+  } );
+});
