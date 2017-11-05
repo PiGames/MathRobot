@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "babel-loader": "^7.0.0",
+    "material-ui": "^0.19.4",
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
   },

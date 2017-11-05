@@ -1,0 +1,53 @@
+html {
+  overflow: hidden;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.equation-container {
+  display: flex;
+  justify-content: center;
+}
+
+#equation {
+  display: flex;
+  align-items: center;
+  font-size: 32px;
+  height: 2em;
+  width: 100%;
+  text-align: center;
+}
+
+.calc-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 25%;
+  height: 2.2em;
+  background: #FEFEFE;
+  border-radius: 2px;
+  border: 0;
+  margin: 2px;
+  cursor: pointer;
+}
+
+.calc-btn:hover {
+  background: #C8C8C8;
+}
+
+.calc-btn .mq-empty {
+  background: none;
+}
+
+.buttons-container {
+  background: #555;
+}
+
+.glyphicon{
+  color: black;
+}
