@@ -1,3 +1,4 @@
+// var socket = io.connect('https://mathrobot.herokuapp.com');
 var socket = io.connect('http://localhost:4200');
 
 socket.on('connect', function(data) {
@@ -7,6 +8,11 @@ socket.on('connect', function(data) {
     socket.on('join room response', d => {
       console.log( d );
     })
+  } );
+
+  $( '#username_button' ).click( () => {
+    console.log( 1 );
+    socket.emit('give name', $( '#username' ).val() );
   } );
 
   $( '#evaluate' ).click( () => {
