@@ -1,5 +1,5 @@
-// var socket = io.connect('https://mathrobot.herokuapp.com');
-var socket = io.connect('http://localhost:4200');
+var socket = io.connect('https://mathrobot.herokuapp.com');
+// var socket = io.connect('http://localhost:4200');
 
 socket.on('connect', function(data) {
   $( '#joinroom' ).click( () => {
