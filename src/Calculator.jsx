@@ -51,7 +51,7 @@ export default class Calculator extends React.Component {
     } );
   }
   onEquationSubmit = () => {
-    console.log(this.equation);
+    this.props.onEquationSubmit(this.equation)
   }
   render() {
     return (
