@@ -32,9 +32,11 @@ class App extends React.Component {
       username: '',
       queue: [],
       robotSteps: [],
-      usernameInputValue: ''
+      usernameInputValue: '',
+      openSnackbar: false
     }
     const socket = io('https://mathrobot.herokuapp.com/')
+    socket.on('connect', ()=>{this.id = socket.id})
     socket.on('queue changed', this.onQueueChange.bind(this))
     socket.on('robot step', this.onRobotStep.bind(this))
     socket.on('robot done', this.onRobotDone.bind(this))
@@ -73,7 +75,7 @@ class App extends React.Component {
   renderUserQueuePositionMessage() {
     const style = {'marginLeft': '16px', 'marginBottom': '8px'}
 
-    const userPositionInQueue = this.state.queue.findIndex(e=>e.user.username === this.state.username)
+    const userPositionInQueue = this.state.queue.findIndex(e=>e.user.id === this.id)
 
     let msg
 
