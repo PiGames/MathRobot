@@ -72,13 +72,13 @@ export default class Calculator extends React.Component {
                 <div className="calc-btn" data-function={7}>7</div>
                 <div className="calc-btn" data-function={8}>8</div>
                 <div className="calc-btn" data-function={9}>9</div>
-                <div className="calc-btn" data-function="\div">\div</div>
+                <div className="calc-btn" data-function="\div">÷</div>
               </div>
               <div className="d-flex">
                 <div className="calc-btn" data-function={4}>4</div>
                 <div className="calc-btn" data-function={5}>5</div>
                 <div className="calc-btn" data-function={6}>6</div>
-                <div className="calc-btn" data-function="\cdot">\times</div>
+                <div className="calc-btn" data-function="\cdot">⋅</div>
               </div>
               <div className="d-flex">
                 <div className="calc-btn" data-function={1}>1</div>
@@ -90,7 +90,7 @@ export default class Calculator extends React.Component {
                 <div className="calc-btn" data-function={0}>0</div>
                 <div className="calc-btn" data-function=".">.</div>
                 <div className="calc-btn" data-function="+">+</div>
-                <div className="calc-btn pull-right" data-function="del">\textup{'{del}'}</div>
+                <div className="calc-btn pull-right" data-function="del">del</div>
               </div>
               <RaisedButton onClick={this.onEquationSubmit.bind(this)}label="Submit" fullWidth={true} primary={true}/>
             </div>
