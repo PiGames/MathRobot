@@ -1,5 +1,7 @@
 /* global MathQuill answerMathField TeXZilla*/
 import React from 'react'
+import RaisedButton from 'material-ui/RaisedButton';
+import parseToClickable from './MathML2Clickable.js'
 
 export default class Calculator extends React.Component {
   componentDidMount() {
@@ -14,7 +16,7 @@ export default class Calculator extends React.Component {
         edit: () => {
           const enteredMath = answerMathField.latex();
           this.equation = TeXZilla.toMathML( enteredMath ).querySelector( 'semantics > :first-child' );
-          console.log(this.equation, enteredMath);
+          console.log(parseToClickable(this.equation));
         }
       },
     }
@@ -51,26 +53,26 @@ export default class Calculator extends React.Component {
     } );
   }
   onEquationSubmit = () => {
-    this.props.onEquationSubmit(this.equation)
+    this.props.onEquationSubmit(parseToClickable(this.equation))
   }
   render() {
     return (
       <div>
         <div className="container">
-          <div className="row">
-            <div className="equation-container col-12 pr-0 pl-0">
+          <div className="row justify-content-md-center">
+            <div className="equation-container col-sm-12 col-md-6 pr-0 pl-0">
               <span id="equation" />
             </div>
           </div>
         </div>
-        <div className="container buttons-container pt-3 pb-3">
-          <div className="row">
-            <div className="col-sm-6 col-6 pr-1">
+        <div className="container buttons-container">
+          <div className="row justify-content-md-center">
+            <div className="col-sm-12 col-md-6">
               <div className="d-flex">
                 <div className="calc-btn" data-function={7}>7</div>
                 <div className="calc-btn" data-function={8}>8</div>
                 <div className="calc-btn" data-function={9}>9</div>
-                <div className="calc-btn" data-function="\frac{ }{ }">\div</div>
+                <div className="calc-btn" data-function="\div">\div</div>
               </div>
               <div className="d-flex">
                 <div className="calc-btn" data-function={4}>4</div>
@@ -87,35 +89,10 @@ export default class Calculator extends React.Component {
               <div className="d-flex">
                 <div className="calc-btn" data-function={0}>0</div>
                 <div className="calc-btn" data-function=".">.</div>
-                <div className="calc-btn" data-function="ans">\textup{'{ans}'}</div>
                 <div className="calc-btn" data-function="+">+</div>
+                <div className="calc-btn pull-right" data-function="del">\textup{'{del}'}</div>
               </div>
-            </div>
-            <div className="col-sm-6 col-6 pl-1">
-              <div className="d-flex">
-                <div className="calc-btn" data-function="^2">a^2</div>
-                <div className="calc-btn" data-function="^{ }">a^b</div>
-                <div className="calc-btn" data-function="\frac{ }{ }">\frac{'{a}{b}'}</div>
-                <div className="calc-btn" data-function="del">\textup{'{del}'}</div>
-              </div>
-              <div className="d-flex">
-                <div className="calc-btn" data-function="\sqrt{ }">\sqrt{'{ }'}</div>
-                <div className="calc-btn" data-function="\sqrt[ ]{ }">\sqrt[n]{'{ }'}</div>
-                <div className="calc-btn" data-function="\left(\right)">()</div>
-                <div className="calc-btn" data-function="!">!</div>
-              </div>
-              <div className="d-flex">
-                <div className="calc-btn" data-function="sin">sin</div>
-                <div className="calc-btn" data-function="cos">cos</div>
-                <div className="calc-btn" data-function="tan">tan</div>
-                <div className="calc-btn" data-function="\pi">\pi</div>
-              </div>
-              <div className="d-flex">
-                <div className="calc-btn" data-function="\left|\right|">\left|a\right|</div>
-                <div className="calc-btn" data-function="ln">ln</div>
-                <div className="calc-btn" data-function="%">%</div>
-                <div className="calc-btn" data-function="enter" onClick={this.onEquationSubmit}>\textup{'{enter}'}</div>
-              </div>
+              <RaisedButton onClick={this.onEquationSubmit.bind(this)}label="Submit" fullWidth={true} primary={true}/>
             </div>
           </div>
         </div>

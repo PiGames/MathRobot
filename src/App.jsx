@@ -60,7 +60,7 @@ class App extends React.Component {
     })
   }
   onEquationSubmit(equation) {
-    this.socket.emit('evaluate', equation)
+    this.socket.emit('evaluate', JSON.stringify(equation))
   }
   onEvaluateError() {
     this.setState({openSnackbar: true})
@@ -90,7 +90,7 @@ class App extends React.Component {
       msg = `You are ${userPositionInQueue} in queue`
     }
 
-    return <Chip style={style}>{msg}</Chip>
+    return <Chip className='pill' style={style}>{msg}</Chip>
   }
   onUserNameSubmit(e) {
     e.preventDefault()
@@ -127,11 +127,10 @@ class App extends React.Component {
             {
               this.state.username === '' ? this.renderUsernameInput() : (
                 <div>
-                  <Card>
-                    <CardHeader style={{'textAlign': 'center'}} title=            {
-                                  this.renderUserQueuePositionMessage()
-                                }/>
-
+                  <Card style={{display: 'flex', justifyContent: 'center', padding: '16px'}}>
+                  {
+                    this.renderUserQueuePositionMessage()
+                  }
                   </Card>
                   <Card>
                     <CardHeader title="Calculator input" subtitle="Type your equation, press Enter, and MathRobot will handle the rest. We have full LateX support!" avatar="./calc_card_avatar.jpg"/>

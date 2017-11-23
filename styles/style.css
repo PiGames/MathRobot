@@ -18,7 +18,7 @@ body {
   align-items: center;
   font-size: 32px;
   height: 2em;
-  width: 100%;
+  width: 94%;
   text-align: center;
 }
 
@@ -31,8 +31,9 @@ body {
   height: 2.2em;
   background: #FEFEFE;
   border-radius: 2px;
-  border: 0;
-  margin: 2px;
+  border: 1px solid black;
+  outline: medium none;
+  margin: 1px;
   cursor: pointer;
 }
 
@@ -42,10 +43,6 @@ body {
 
 .calc-btn .mq-empty {
   background: none;
-}
-
-.buttons-container {
-  background: #555;
 }
 
 .glyphicon{
