@@ -36,12 +36,12 @@ export default class Calculator extends React.Component {
         const func = btn.dataset.function;
         switch (func) {
           case 'del': {
-            answerMathField.focus();
+            //answerMathField.focus();
             answerMathField.keystroke('Backspace');
             break;
           }
           default: {
-            answerMathField.focus();
+            //answerMathField.focus();
             answerMathField.write( func );
           }
         }
@@ -56,8 +56,8 @@ export default class Calculator extends React.Component {
       <div>
         <div className="container">
           <div className="row justify-content-md-center">
-            <div readOnly={true} onFocus={e=>e.preventDefault()}className="equation-container col-sm-12 col-md-6 pr-0 pl-0">
-              <span id="equation" />
+            <div readOnly={true} onChange={e=>e.preventDefault()} onClick={e=>e.preventDefault()} onFocus={e=>e.preventDefault()} disabled className="equation-container col-sm-12 col-md-6 pr-0 pl-0">
+              <span  onChange={e=>e.preventDefault()} onClick={e=>e.preventDefault()} onFocus={e=>e.preventDefault()} id="equation" disabled/>
             </div>
           </div>
         </div>
