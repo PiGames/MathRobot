@@ -73,7 +73,7 @@ class App extends React.Component {
     }
   }
   renderUserQueuePositionMessage() {
-    const style = {'marginLeft': '16px', 'marginBottom': '8px'}
+    const style = {}
 
     const userPositionInQueue = this.state.queue.findIndex(e=>e.user.id === this.id)
 

@@ -611,7 +611,7 @@ var Cursor = P(Point, function(_) {
       }
       else
         this.jQ.appendTo(this.parent.jQ);
-      this.parent.focus();
+      //this.parent.focus();
     }
     this.intervalId = setInterval(this.blink, 500);
     return this;
@@ -648,7 +648,7 @@ var Cursor = P(Point, function(_) {
     prayDirection(dir);
     this.jQ.insAtDirEnd(dir, el.jQ);
     this.withDirInsertAt(dir, el, 0, el.ends[dir]);
-    el.focus();
+    //el.focus();
     return this;
   };
   _.insAtLeftEnd = function(el) { return this.insAtDirEnd(L, el); };
@@ -930,7 +930,7 @@ function insistOnInterVer() {
 function MathQuill(el) {
   insistOnInterVer();
   return MQ1(el);
-};
+}
 MathQuill.prototype = Progenote.p;
 MathQuill.interfaceVersion = function(v) {
   // shim for #459-era interface versioning (ended with #495)
@@ -973,7 +973,7 @@ function getInterface(v) {
     var blockId = $(el).children('.mq-root-block').attr(mqBlockId);
     var ctrlr = blockId && Node.byId[blockId].controller;
     return ctrlr ? APIClasses[ctrlr.KIND_OF_MQ](ctrlr) : null;
-  };
+  }
   var APIClasses = {};
 
   MQ.L = L;
@@ -1115,7 +1115,7 @@ function getInterface(v) {
       cmd.createLeftOf(this.__controller.cursor);
     };
   });
-  MQ.EditableField = function() { throw "wtf don't call me, I'm 'abstract'"; };
+  MQ.EditableField = function() { throw 'wtf don\'t call me, I\'m \'abstract\''; };
   MQ.EditableField.prototype = APIClasses.EditableField.prototype;
 
   /**
@@ -1166,7 +1166,7 @@ var Parser = P(function(_, super_, Parser) {
 
   function parseError(stream, message) {
     if (stream) {
-      stream = "'"+stream+"'";
+      stream = '\''+stream+'\'';
     }
     else {
       stream = 'EOF';
@@ -1294,7 +1294,7 @@ var Parser = P(function(_, super_, Parser) {
   // -*- primitive parsers -*- //
   var string = this.string = function(str) {
     var len = str.length;
-    var expected = "expected '"+str+"'";
+    var expected = 'expected \''+str+'\'';
 
     return Parser(function(stream, onSuccess, onFailure) {
       var head = stream.slice(0, len);
@@ -2171,7 +2171,7 @@ Controller.open(function(_) {
 
       if (ctrlr.blurred) {
         if (!ctrlr.editable) rootjQ.prepend(textareaSpan);
-        textarea.focus();
+        //textarea.focus();
       }
       e.preventDefault(); // doesn't work in IE\u22648, but it's a one-line fix:
       e.target.unselectable = true; // http://jsbin.com/yagekiji/1
@@ -2977,7 +2977,7 @@ var TextBlock = P(Node, function(_, super_) {
     }
     else if (cursor.anticursor.parent === this) {
       // mouse-selecting within this TextBlock, re-insert the anticursor
-      var cursorPosition = cursor[L] && cursor[L].text.length;;
+      var cursorPosition = cursor[L] && cursor[L].text.length;
       if (this.anticursorPosition === cursorPosition) {
         cursor.anticursor = Point.copy(cursor);
       }
@@ -3662,7 +3662,7 @@ var Variable = P(Symbol, function(_, super_) {
     var text = this.ctrlSeq;
     if (this[L] && !(this[L] instanceof Variable)
         && !(this[L] instanceof BinaryOperator)
-        && this[L].ctrlSeq !== "\\ ")
+        && this[L].ctrlSeq !== '\\ ')
       text = '*' + text;
     if (this[R] && !(this[R] instanceof BinaryOperator)
         && !(this[R] instanceof SupSub))
@@ -3867,7 +3867,7 @@ LatexCmds.f = P(Letter, function(_, super_) {
 // VanillaSymbol's
 LatexCmds[' '] = LatexCmds.space = bind(VanillaSymbol, '\\ ', '&nbsp;');
 
-LatexCmds["'"] = LatexCmds.prime = bind(VanillaSymbol, "'", '&prime;');
+LatexCmds['\''] = LatexCmds.prime = bind(VanillaSymbol, '\'', '&prime;');
 
 LatexCmds.backslash = bind(VanillaSymbol,'\\backslash ','\\');
 if (!CharCmds['\\']) CharCmds['\\'] = LatexCmds.backslash;
@@ -4164,7 +4164,7 @@ else if ('filter' in div_style) { //IE 6, 7, & 8 fallback, see https://github.co
     }
     var innerjQ = jQ.children()
     .css('filter', 'progid:DXImageTransform.Microsoft'
-        + '.Matrix(M11=' + x + ",SizingMethod='auto expand')"
+        + '.Matrix(M11=' + x + ',SizingMethod=\'auto expand\')'
     );
     function calculateMarginRight() {
       jQ.css('marginRight', (innerjQ.width()-1)*(x-1)/x + 'px');
@@ -4888,9 +4888,9 @@ LatexCmds.MathQuillMathField = P(MathCommand, function(_, super_) {
 // and rendering LaTeX like \embed{registeredName} (see test).
 var Embed = LatexCmds.embed = P(Symbol, function(_, super_) {
   _.setOptions = function(options) {
-    function noop () { return ""; }
+    function noop () { return ''; }
     this.text = options.text || noop;
-    this.htmlTemplate = options.htmlString || "";
+    this.htmlTemplate = options.htmlString || '';
     this.latex = options.latex || noop;
     return this;
   };
