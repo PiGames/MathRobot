@@ -31,17 +31,13 @@ export default class Calculator extends React.Component {
     const btns = document.querySelectorAll( '.calc-btn' );
     btns.forEach( ( btn ) => {
       MQ.StaticMath( btn );
-      btn.addEventListener( 'click', function() {
+      btn.addEventListener( 'click', function(e) {
+        e.preventDefault()
         const func = btn.dataset.function;
         switch (func) {
           case 'del': {
             answerMathField.focus();
             answerMathField.keystroke('Backspace');
-            break;
-          }
-          case 'enter': {
-            answerMathField.focus();
-            answerMathField.keystroke('Enter');
             break;
           }
           default: {
@@ -60,7 +56,7 @@ export default class Calculator extends React.Component {
       <div>
         <div className="container">
           <div className="row justify-content-md-center">
-            <div onFocus={e=>e.preventDefault()}className="equation-container col-sm-12 col-md-6 pr-0 pl-0">
+            <div readOnly={true} onFocus={e=>e.preventDefault()}className="equation-container col-sm-12 col-md-6 pr-0 pl-0">
               <span id="equation" />
             </div>
           </div>
