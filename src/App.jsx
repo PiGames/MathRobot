@@ -133,18 +133,20 @@ class App extends React.Component {
                   }
                   </Card>
                   <Card>
-                    <CardHeader title="Calculator input" subtitle="Type your equation, press Enter, and MathRobot will handle the rest. We have full LateX support!" avatar="./calc_card_avatar.jpg"/>
+                    <CardHeader textStyle={{paddingRight: 0}} title="Calculator input" avatar="./calc_card_avatar.jpg" subtitle="Type your equation"/>
                     <CardMedia>
                       <Calculator onEquationSubmit={this.onEquationSubmit.bind(this)}/>
                     </CardMedia>
                   </Card>
                   <Card>
-                    <CardHeader title="Robot's status log" subtitle="Here you can see how MathRobot's status changed over time." avatar="./prompt_avatar.png"/>
+                  <div>
+                    <CardHeader textStyle={{paddingRight: 0}}title="Robot's status log" avatar="./prompt_avatar.png" subtitle="Watch for your result"/>
                     <Chip style={{'marginLeft': '16px', 'marginBottom': '8px'}}>
                     {
                       this.renderCurrentUser()
                     }
                     </Chip>
+                    </div>
                     <CardMedia>
                       <List>
                       {
@@ -155,7 +157,7 @@ class App extends React.Component {
                       <Divider/>
                       {
                         this.state.robotSteps.length > 0 ?
-                        <ListItem leftIcon={<ContentForward/>}>{this.state.robotSteps[this.state.robotSteps.length-1]}</ListItem>: null
+                        <ListItem key={6} leftIcon={<ContentForward/>}>{this.state.robotSteps[this.state.robotSteps.length-1]}</ListItem>: null
                       }
                       </List>
                     </CardMedia>

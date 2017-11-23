@@ -60,7 +60,7 @@ export default class Calculator extends React.Component {
       <div>
         <div className="container">
           <div className="row justify-content-md-center">
-            <div className="equation-container col-sm-12 col-md-6 pr-0 pl-0">
+            <div onFocus={e=>e.preventDefault()}className="equation-container col-sm-12 col-md-6 pr-0 pl-0">
               <span id="equation" />
             </div>
           </div>
