@@ -60,7 +60,7 @@ class App extends React.Component {
     })
   }
   onEquationSubmit(equation) {
-    this.socket.emit('evaluate', JSON.stringify(equation))
+    this.socket.emit('evaluate', equation)
   }
   onEvaluateError() {
     this.setState({openSnackbar: true})
