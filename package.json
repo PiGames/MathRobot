@@ -5,7 +5,7 @@
   "scripts": {
     "lint": "eslint src",
     "start": "node server.js",
-    "build": "webpack"
+    "build": "NODE_ENV=production webpack"
   },
   "repository": "https://github.com/noahlotzer/react-simple-boilerplate.git",
   "keywords": [

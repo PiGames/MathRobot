@@ -1,12 +1,17 @@
 var path = require('path');
 var webpack = require('webpack');
 
+const entry = [
+  './src/index.jsx'
+];
+
+if ( process.env.NODE_ENV !== 'production' ) {
+  entry.push( 'webpack-dev-server/client?http://localhost:3000' );
+}
+
 module.exports = {
   devtool: 'eval',
-  entry: [
-    'webpack-dev-server/client?http://localhost:3000',
-    './src/index.jsx'
-  ],
+  entry,
   output: {
     path: path.join(__dirname, 'build'),
     filename: 'bundle.js',
