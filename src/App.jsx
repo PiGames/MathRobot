@@ -33,9 +33,11 @@ class App extends React.Component {
       queue: [],
       robotSteps: [],
       usernameInputValue: '',
-      openSnackbar: false
+      openSnackbar: false,
+      showResult: false,
+      resultImg: ''
     }
-    const socket = io('https://mathrobot.herokuapp.com/')
+    const socket = io('http://localhost:4200')
     socket.on('connect', ()=>{this.id = socket.id})
     socket.on('queue changed', this.onQueueChange.bind(this))
     socket.on('robot step', this.onRobotStep.bind(this))
@@ -54,9 +56,10 @@ class App extends React.Component {
       queue
     })
   }
-  onRobotDone({result}) {
+  onRobotDone(img) {
     this.setState({
-      robotSteps: [...this.state.robotSteps, `Robot says that the answer is: ${result}`]
+      showResult: true,
+      resultImg: img
     })
   }
   onEquationSubmit(equation) {
@@ -118,6 +121,16 @@ class App extends React.Component {
       </Card>
     )
   }
+  renderResultCard() {
+    return (
+      <Card>
+        <CardHeader title="Result" avatar="./prompt_avatar.png" subtitle="Watch for your result"/>
+        <CardMedia>
+          <img src={this.state.resultImg}/>
+        </CardMedia>
+      </Card>
+    )
+  }
   render() {
     return (
       <div>
@@ -162,6 +175,9 @@ class App extends React.Component {
                       </List>
                     </CardMedia>
                   </Card>
+                  {
+                    this.state.showResult ? this.renderResultCard(): null
+                  }
                   <Snackbar
                     open={this.state.openSnackbar}
                     message="You already submitted one equation!"
