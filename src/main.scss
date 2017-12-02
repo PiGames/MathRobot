@@ -1,0 +1,20 @@
+body, html {
+  min-height: 100%;
+}
+
+.fill {
+  min-height: calc(75vh - 50px);
+}
+
+.spin-animation {
+  animation: 1.25s spin infinite cubic-bezier(0, 0, 0.44, 1);
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,10 @@
+.disabled-tab {
+  background: #A5D6A7 !important;
+  color: rgba(0, 0, 0, 0.3) !important;
+  border-radius: 0 !important;
+  cursor: not-allowed !important;
+
+  span {
+    display: none !important;
+  }
+}

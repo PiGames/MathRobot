@@ -1,5 +1,7 @@
 import React from 'react'
 import RaisedButton from 'material-ui/RaisedButton';
+import {white} from 'material-ui/styles/colors';
+import './calculator.scss';
 
 export default class Calculator extends React.Component {
   componentDidMount() {
@@ -36,7 +38,7 @@ export default class Calculator extends React.Component {
 <item ref="tangent"/>
 <item ref="naturalLog"/>
 </section>
-<section rows="3">
+<section rows="2">
 <item ref="numberPi"/>
 <item ref="numberE"/>
 </section>
@@ -54,11 +56,8 @@ export default class Calculator extends React.Component {
   render() {
     return (
       <div>
-        <div>
-          <div id="calc"></div>
-        </div>
-        <RaisedButton onClick={ this.onEquationSubmit }>Submit</RaisedButton>
-        <br/>
+        <div id="calc" style={ { height: '300px' } }></div>
+        <RaisedButton onClick={ this.onEquationSubmit } className="my-3" primary labelColor={white} label="submit" />
       </div>
     );
   }
