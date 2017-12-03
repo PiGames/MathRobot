@@ -1,7 +1,8 @@
 import React from 'react'
-import RaisedButton from 'material-ui/RaisedButton';
-import {white} from 'material-ui/styles/colors';
-import './calculator.scss';
+import RaisedButton from 'material-ui/RaisedButton'
+import {white} from 'material-ui/styles/colors'
+import './calculator.scss'
+import {CardHeader} from 'material-ui/Card'
 
 export default class Calculator extends React.Component {
   componentDidMount() {
@@ -45,8 +46,8 @@ export default class Calculator extends React.Component {
 </tab>
 </toolbar>
 `.replace(/\n/g, ''),
-    } );
-    this.editor.insertInto(document.getElementById('calc'));
+    } )
+    this.editor.insertInto(document.getElementById('calc'))
   }
 
   onEquationSubmit = () => {
@@ -55,10 +56,16 @@ export default class Calculator extends React.Component {
 
   render() {
     return (
-      <div>
-        <div id="calc" style={ { height: '300px' } }></div>
-        <RaisedButton onClick={ this.onEquationSubmit } className="my-3" primary labelColor={white} label="submit" />
+      <div className={ 'container' }>
+        <CardHeader textStyle={{paddingRight: 0}} title="Calculator input" avatar="./calc_card_avatar.jpg" subtitle="Type your equation" className="px-0" />
+        <div>
+          <div>
+            <div id="calc" style={ { height: '300px' } }></div>
+            <RaisedButton onClick={ this.onEquationSubmit } className="my-3" primary labelColor={white} label="submit" />
+          </div>
+        </div>
       </div>
-    );
+
+    )
   }
 }

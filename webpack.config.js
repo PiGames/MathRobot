@@ -10,7 +10,7 @@ if ( process.env.NODE_ENV !== 'production' ) {
 }
 
 module.exports = {
-  devtool: 'eval',
+  devtool: '#cheap-module-eval-source-map',
   entry,
   output: {
     path: path.join(__dirname, 'build'),
