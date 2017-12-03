@@ -21,7 +21,7 @@ class App extends React.Component {
   constructor() {
     super()
     this.state = {
-      username: 'asd',
+      username: '',
       queue: [],
       robotSteps: [],
       openSnackbar: false,
