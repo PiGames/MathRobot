@@ -30,7 +30,7 @@ class App extends React.Component {
       evaluateError: '',
     }
 
-    const socket = io('http://localhost:4200')
+    const socket = io(process.env.BACKEND_URL)
     socket.on('connect', ()=>{
       this.setState({
         userId: socket.id

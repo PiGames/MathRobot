@@ -1,12 +1,12 @@
-var path = require('path');
-var webpack = require('webpack');
+var path = require('path')
+var webpack = require('webpack')
 
 const entry = [
   './src/index.jsx'
-];
+]
 
 if ( process.env.NODE_ENV !== 'production' ) {
-  entry.push( 'webpack-dev-server/client?http://localhost:3000' );
+  entry.push( 'webpack-dev-server/client?http://localhost:3000' )
 }
 
 module.exports = {
@@ -29,5 +29,10 @@ module.exports = {
         loaders: ['style-loader', 'css-loader', 'sass-loader']
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.BACKEND_URL': JSON.stringify(process.env.BACKEND_URL)
+    }),
+  ]
 }
