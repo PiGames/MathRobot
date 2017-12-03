@@ -9,3 +9,6 @@ Frontend:
 Backend:
 [ ] Check for used username
 [ ] Basic equation validation
+
+All:
+[ ] Clear package.jsons
