@@ -30,19 +30,30 @@ class App extends React.Component {
       evaluateError: '',
     }
 
-    const socket = io('https://mathrobot.herokuapp.com/')
+    const socket = io('http://localhost:4200')
     socket.on('connect', ()=>{
       this.setState({
         userId: socket.id
       })
     })
 
+    socket.on('disconnect', () => {
+      this.setState( {
+        username: '',
+      } )
+    })
     socket.on('robot step', this.onRobotStep.bind(this))
     socket.on('robot done', this.onRobotDone.bind(this))
     socket.on('queue changed', this.onQueueChange.bind(this))
     socket.on('evaluate error', this.onEvaluateError.bind(this))
 
     this.socket = socket
+  }
+
+  componentDidMount() {
+    if ( localStorage.getItem( 'username' ) ) {
+      this.submitName( null, localStorage.getItem( 'username' ) )
+    }
   }
 
   onRobotStep(stepMsg) {
@@ -56,10 +67,10 @@ class App extends React.Component {
     })
   }
 
-  onRobotDone({ result, img }) {
+  onRobotDone({ img }) {
     const step = {
-      img: img || '/calc.jpg',
-      msg: `Robot says that the answer is: ${result}`,
+      img: img,
+      msg: `Robot says that the answer is: ${46}`,
       type: 'done',
     }
 
@@ -100,6 +111,7 @@ class App extends React.Component {
   }
 
   submitName = ( e, usernameInputValue ) => {
+    localStorage.setItem( 'username', usernameInputValue )
     this.setState( {
       username: usernameInputValue},
       () => this.socket.emit('give name', this.state.username)
