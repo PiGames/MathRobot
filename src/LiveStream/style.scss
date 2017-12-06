@@ -1,0 +1,17 @@
+.ar16-9 {
+  position: relative;
+  box-sizing: border-box;
+
+  iframe {
+    position: absolute;
+    left: 1rem;
+    right: 1rem;
+    width: calc(100% - 2rem);
+  }
+
+  &::after {
+    content: "";
+    display: block;
+    padding-bottom: 56%;
+  }
+}
