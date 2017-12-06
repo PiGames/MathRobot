@@ -29,7 +29,8 @@ class App extends React.Component {
       userId: null,
       evaluateError: '',
       showSignIn: true,
-      openUsernameSnackbar: false
+      openUsernameSnackbar: false,
+      openEquationSnackbar: false
     }
 
     const socket = io(process.env.BACKEND_URL)
@@ -100,9 +101,16 @@ class App extends React.Component {
   }
 
   onEquationSubmit = (equation) => {
+    if(equation==='<math xmlns="http://www.w3.org/1998/Math/MathML"/>'){
+      this.setState({
+        openEquationSnackbar: true
+      })
+      return
+    }
     this.setState( {
       currentTab: 'log',
-      openSnackbar: true
+      openSnackbar: true,
+      openEquationSnackbar: false
     } )
     this.socket.emit('evaluate', equation)
   }
@@ -197,6 +205,12 @@ class App extends React.Component {
                   message="Your request has been added to the queue"
                   autoHideDuration={4000}
                   onRequestClose={this.closeSnackabar}
+                />
+                <Snackbar
+                  open={this.state.openEquationSnackbar}
+                  message="Why would you submit an empty equation?"
+                  autoHideDuration={4000}
+                  onRequestClose={()=>this.setState({openEquationSnackbar: false})}
                 />
               </div>
             )
