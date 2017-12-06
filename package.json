@@ -5,7 +5,7 @@
   "scripts": {
     "lint": "eslint src",
     "start": "BACKEND_URL=http://localhost:4200 node server.js",
-    "build": "BACKEND_URL=http://localhost:4200 NODE_ENV=production webpack"
+    "build": "BACKEND_URL=https://mathrobot.herokuapp.com/ NODE_ENV=production webpack"
   },
   "repository": "https://github.com/noahlotzer/react-simple-boilerplate.git",
   "keywords": [
