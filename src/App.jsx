@@ -13,6 +13,7 @@ import { getUserPositionInQueue } from './utils/queueUtils.js'
 import Calculator from './Calculator/index.jsx'
 import SignIn from './SignIn/index.jsx'
 import Logs from './Logs/index.jsx'
+import LiveStream from './LiveStream/index.jsx'
 
 import './main.scss'
 import './tab.scss'
@@ -125,7 +126,7 @@ class App extends React.Component {
   handleTabChange = (value) => {
     const userPositionInQueue = this.getUserPositionInQueue()
 
-    if ( userPositionInQueue < 0 ) {
+    if ( userPositionInQueue < 0 || value !== 'calc' ) {
       this.setState({
         currentTab: value,
       })
@@ -171,6 +172,9 @@ class App extends React.Component {
                     <Calculator
                       onEquationSubmit={this.onEquationSubmit}
                     />
+                  </Tab>
+                  <Tab label="See robot live" value="live">
+                    <LiveStream />
                   </Tab>
                 </Tabs>
 
