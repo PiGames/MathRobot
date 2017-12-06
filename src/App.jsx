@@ -28,6 +28,8 @@ class App extends React.Component {
       currentTab: 'log',
       userId: null,
       evaluateError: '',
+      showSignIn: true,
+      openUsernameSnackbar: false
     }
 
     const socket = io(process.env.BACKEND_URL)
@@ -46,14 +48,9 @@ class App extends React.Component {
     socket.on('robot done', this.onRobotDone.bind(this))
     socket.on('queue changed', this.onQueueChange.bind(this))
     socket.on('evaluate error', this.onEvaluateError.bind(this))
-
+    socket.on('username given', this.onUsernameGiven.bind(this))
+    socket.on('username error', this.onUsernameError.bind(this))
     this.socket = socket
-  }
-
-  componentDidMount() {
-    if ( localStorage.getItem( 'username' ) ) {
-      this.submitName( null, localStorage.getItem( 'username' ) )
-    }
   }
 
   onRobotStep(stepMsg) {
@@ -110,12 +107,9 @@ class App extends React.Component {
     this.socket.emit('evaluate', equation)
   }
 
-  submitName = ( e, usernameInputValue ) => {
-    localStorage.setItem( 'username', usernameInputValue )
-    this.setState( {
-      username: usernameInputValue},
-      () => this.socket.emit('give name', this.state.username)
-    )
+  submitName = ( e, username ) => {
+    console.log('submit')
+    this.socket.emit('give name', username)
   }
 
   getUserPositionInQueue = () => {
@@ -132,6 +126,22 @@ class App extends React.Component {
     }
   };
 
+  onUsernameGiven(username) {
+    console.log('given')
+    localStorage.setItem( 'username', username )
+    this.setState( {
+      username,
+      showSignIn: false,
+      openUsernameSnackbar: false
+    }
+    )
+  }
+  onUsernameError() {
+    console.log('error')
+    this.setState({
+     openUsernameSnackbar: true
+   }, ()=>console.log(this.state.openUsernameSnackbar))
+  }
   render() {
     const isUserInQueue = this.getUserPositionInQueue() >= 0
 
@@ -150,8 +160,16 @@ class App extends React.Component {
               }
             />
             {
-              this.state.username === '' ?
+              this.state.showSignIn ?
+              <div>
               <SignIn submitName={this.submitName} />
+              <Snackbar
+                open={this.state.openUsernameSnackbar}
+                message="Username already exists"
+                autoHideDuration={4000}
+                onRequestClose={()=>this.setState({openUsernameSnackbar: false})}
+              />
+              </div>
               :
               (
               <div>
