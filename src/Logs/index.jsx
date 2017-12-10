@@ -7,9 +7,6 @@ import { Card, CardHeader } from 'material-ui/Card'
 import Cached from 'material-ui/svg-icons/action/cached'
 import ActionDone from 'material-ui/svg-icons/action/done'
 
-import UserQueuePositionChip from './UserQueuePositionChip.jsx'
-import EvaluatedUserChip from './EvaluatedUserChip.jsx'
-import ErrorChip from './ErrorChip.jsx'
 import DoneStep from './DoneStep.jsx'
 import styles from './styles'
 
@@ -66,6 +63,22 @@ export default class Logs extends React.Component {
     } )
   }
 
+  renderQueue() {
+    return this.props.queue.length ? (
+      <div className="py-3" style={ styles.chipWrapper }>
+      <h5>Users queue:</h5>
+      <div style={styles.usersContainer}>
+        {
+          this.props.queue.map(({user}, i)=>(
+              <div key={user} style={styles.user}>{i}. {user.username}</div>
+            ))
+        }
+      </div>
+    </div>
+    ):<h5>No users in the queue</h5>
+
+  }
+
   render() {
     return (
       <div className="container pb-3">
@@ -77,11 +90,7 @@ export default class Logs extends React.Component {
             subtitle="Watch for your result"
             className="px-0 pb-0"
           />
-          <div className="py-3" style={ styles.chipWrapper }>
-            <ErrorChip errorText={ this.props.errorText } />
-            <EvaluatedUserChip queue={ this.props.queue } />
-            <UserQueuePositionChip queue={ this.props.queue } userId={ this.props.userId } />
-          </div>
+          {this.renderQueue()}
         </div>
         <Card className={`${this.props.robotSteps.length === 0 ? 'd-none ' : ''} py-2`}>
           { this.renderLastStep() }

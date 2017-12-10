@@ -53,7 +53,7 @@ class App extends React.Component {
     socket.on('username error', this.onUsernameError.bind(this))
     this.socket = socket
   }
-
+  
   onRobotStep(stepMsg) {
     const step = {
       msg: stepMsg,
@@ -83,16 +83,17 @@ class App extends React.Component {
   }
 
   onQueueChange(queue) {
+    console.log(queue)
     this.setState({
       queue
     })
   }
 
-  onEvaluateError( err ) {
+  onEvaluateError() {
     this.setState( {
       currentTab: 'log',
       openSnackbar: true,
-      snackbarMessage: err,
+      snackbarMessage: 'Error occured while evaluating your equation',
     } )
   }
 
@@ -153,7 +154,7 @@ class App extends React.Component {
     this.setState({
      openSnackbar: true,
      snackbarMessage: 'Username already exists'
-   }, ()=>console.log(this.state.openUsernameSnackbar))
+   })
   }
   render() {
     const isUserInQueue = this.getUserPositionInQueue() >= 0
@@ -201,16 +202,15 @@ class App extends React.Component {
                     <LiveStream />
                   </Tab>
                 </Tabs>
-
-                <Snackbar
-                  open={true}
-                  message={this.state.snackbarMessage}
-                  autoHideDuration={4000}
-                  onRequestClose={this.closeSnackabar}
-                />
               </div>
             )
           }
+          <Snackbar
+            open={this.state.openSnackbar}
+            message={this.state.snackbarMessage}
+            autoHideDuration={4000}
+            onRequestClose={this.closeSnackabar}
+          />
           </div>
         </MuiThemeProvider>
       </div>
