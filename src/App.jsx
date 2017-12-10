@@ -26,12 +26,11 @@ class App extends React.Component {
       queue: [],
       robotSteps: [],
       openSnackbar: false,
+      snackbarMessage: '',
       currentTab: 'log',
       userId: null,
       evaluateError: '',
       showSignIn: true,
-      openUsernameSnackbar: false,
-      openEquationSnackbar: false
     }
 
     const socket = io(process.env.BACKEND_URL)
@@ -89,9 +88,11 @@ class App extends React.Component {
     })
   }
 
-  onEvaluateError() {
+  onEvaluateError( err ) {
     this.setState( {
-      evaluateError: 'aaa',
+      currentTab: 'log',
+      openSnackbar: true,
+      snackbarMessage: err,
     } )
   }
 
@@ -102,17 +103,20 @@ class App extends React.Component {
   }
 
   onEquationSubmit = (equation) => {
-    if(equation==='<math xmlns="http://www.w3.org/1998/Math/MathML"/>'){
+    if(equation === '<math xmlns="http://www.w3.org/1998/Math/MathML"/>'){
       this.setState({
-        openEquationSnackbar: true
+        openSnackbar: true,
+        snackbarMessage: 'Why would you submit an empty equation?'
       })
       return
     }
+
     this.setState( {
       currentTab: 'log',
       openSnackbar: true,
-      openEquationSnackbar: false
+      snackbarMessage: 'Your request has been added to the queue'
     } )
+
     this.socket.emit('evaluate', equation)
   }
 
@@ -141,14 +145,14 @@ class App extends React.Component {
     this.setState( {
       username,
       showSignIn: false,
-      openUsernameSnackbar: false
-    }
-    )
+      openSnackbar: false,
+    } )
   }
   onUsernameError() {
     console.log('error')
     this.setState({
-     openUsernameSnackbar: true
+     openSnackbar: true,
+     snackbarMessage: 'Username already exists'
    }, ()=>console.log(this.state.openUsernameSnackbar))
   }
   render() {
@@ -172,12 +176,6 @@ class App extends React.Component {
               this.state.showSignIn ?
               <div>
               <SignIn submitName={this.submitName} />
-              <Snackbar
-                open={this.state.openUsernameSnackbar}
-                message="Username already exists"
-                autoHideDuration={4000}
-                onRequestClose={()=>this.setState({openUsernameSnackbar: false})}
-              />
               </div>
               :
               (
@@ -205,16 +203,10 @@ class App extends React.Component {
                 </Tabs>
 
                 <Snackbar
-                  open={this.state.openSnackbar}
-                  message="Your request has been added to the queue"
+                  open={true}
+                  message={this.state.snackbarMessage}
                   autoHideDuration={4000}
                   onRequestClose={this.closeSnackabar}
-                />
-                <Snackbar
-                  open={this.state.openEquationSnackbar}
-                  message="Why would you submit an empty equation?"
-                  autoHideDuration={4000}
-                  onRequestClose={()=>this.setState({openEquationSnackbar: false})}
                 />
               </div>
             )
