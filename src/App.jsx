@@ -54,13 +54,13 @@ class App extends React.Component {
     this.socket = socket
   }
 
-  componentDidMount() {
-    const username = localStorage.getItem( 'username' )
-
-    if ( username ) {
-      this.submitName( null, username )
-    }
-  }
+  // componentDidMount() {
+  //   const username = localStorage.getItem( 'username' )
+  //
+  //   if ( username ) {
+  //     this.submitName( null, username )
+  //   }
+  // }
 
   onRobotStep(stepMsg) {
     const step = {
