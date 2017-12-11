@@ -70,7 +70,7 @@ export default class Logs extends React.Component {
       <div style={styles.usersContainer}>
         {
           this.props.queue.map(({user}, i)=>(
-              <div key={user} style={styles.user}>{i}. {user.username}</div>
+              <div key={user} style={styles.user}>{i+1}. {user.username}</div>
             ))
         }
       </div>
