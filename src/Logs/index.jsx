@@ -24,7 +24,7 @@ export default class Logs extends React.Component {
         return item
       }
 
-      const item = ( <ListItem key={ 6 } leftIcon={<Cached className="spin-animation" />}>{lastStep.msg}</ListItem> )
+      const item = ( <ListItem key={ 'caching' } leftIcon={<Cached className="spin-animation" />}>{lastStep.msg}</ListItem> )
 
       if ( this.props.robotSteps.length > 1 ) {
         return [
@@ -47,7 +47,7 @@ export default class Logs extends React.Component {
     return steps.map((step, i) => {
       if ( step.type === 'divider' ) {
         if ( i > 0 ) {
-          return <ListItem key={i} innerDivStyle={ { margin: '-8px -16px 0' } } hoverColor={white}><Divider /></ListItem>
+          return <ListItem key={`step-${i}`} innerDivStyle={ { margin: '-8px -16px 0' } } hoverColor={white}><Divider /></ListItem>
         }
 
         return null
@@ -58,7 +58,7 @@ export default class Logs extends React.Component {
       }
 
       return (
-        <ListItem leftIcon={<ActionDone />} key={i}>{step.msg}</ListItem>
+        <ListItem leftIcon={<ActionDone />} key={`step-${i}`}>{step.msg}</ListItem>
       )
     } )
   }
@@ -70,7 +70,7 @@ export default class Logs extends React.Component {
       <div style={styles.usersContainer}>
         {
           this.props.queue.map(({user}, i)=>(
-              <div key={user} style={styles.user}>{i+1}. {user.username}</div>
+              <div key={`user-${user.username}`} style={styles.user}>{i+1}. {user.username}</div>
             ))
         }
       </div>

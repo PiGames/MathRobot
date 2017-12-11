@@ -53,7 +53,15 @@ class App extends React.Component {
     socket.on('username error', this.onUsernameError.bind(this))
     this.socket = socket
   }
-  
+
+  // componentDidMount() {
+  //   const username = localStorage.getItem( 'username' )
+  //
+  //   if ( username ) {
+  //     this.submitName( null, username )
+  //   }
+  // }
+
   onRobotStep(stepMsg) {
     const step = {
       msg: stepMsg,
@@ -89,11 +97,11 @@ class App extends React.Component {
     })
   }
 
-  onEvaluateError() {
+  onEvaluateError( err ) {
     this.setState( {
       currentTab: 'log',
       openSnackbar: true,
-      snackbarMessage: 'Error occured while evaluating your equation',
+      snackbarMessage: err || 'Error occured while evaluating your equation',
     } )
   }
 
@@ -122,7 +130,6 @@ class App extends React.Component {
   }
 
   submitName = ( e, username ) => {
-    console.log('submit')
     this.socket.emit('give name', username)
   }
 
@@ -141,7 +148,6 @@ class App extends React.Component {
   };
 
   onUsernameGiven(username) {
-    console.log('given')
     localStorage.setItem( 'username', username )
     this.setState( {
       username,
