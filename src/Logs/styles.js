@@ -4,10 +4,6 @@ export default {
     display: 'inline-block'
   },
 
-  chipWrapper: {
-    margin: '0 -4px',
-  },
-
   user: {
     height: '30px',
     boxSizing: 'border-box'
@@ -15,6 +11,6 @@ export default {
 
   usersContainer: {
     overflowY: 'scroll',
-    height: '90px'
+    maxhHeight: '90px'
   }
 }

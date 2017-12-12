@@ -31,6 +31,7 @@ class App extends React.Component {
       userId: null,
       evaluateError: '',
       showSignIn: true,
+      isDown: false,
     }
 
     const socket = io(process.env.BACKEND_URL)
@@ -38,12 +39,11 @@ class App extends React.Component {
       this.setState({
         userId: socket.id
       })
+      this.onServiceUp()
     })
 
     socket.on('disconnect', () => {
-      this.setState( {
-        username: '',
-      } )
+      this.onServiceDown()
     })
     socket.on('robot step', this.onRobotStep.bind(this))
     socket.on('robot done', this.onRobotDone.bind(this))
@@ -51,6 +51,9 @@ class App extends React.Component {
     socket.on('evaluate error', this.onEvaluateError.bind(this))
     socket.on('username given', this.onUsernameGiven.bind(this))
     socket.on('username error', this.onUsernameError.bind(this))
+
+    socket.on('service is up', this.onServiceUp)
+    socket.on('service is down', this.onServiceDown)
     this.socket = socket
   }
 
@@ -101,7 +104,22 @@ class App extends React.Component {
     this.setState( {
       currentTab: 'log',
       openSnackbar: true,
+      robotSteps: [...this.state.robotSteps, { msg: 'Error occured while executing equation', type: 'error' } ],
       snackbarMessage: err || 'Error occured while evaluating your equation',
+    } )
+  }
+
+  onServiceDown = () => {
+    console.log( 'Robot is down' )
+    this.setState( {
+      isDown: true,
+    } )
+  }
+
+  onServiceUp = () => {
+    console.log( 'Robot is up' )
+    this.setState( {
+      isDown: false,
     } )
   }
 
@@ -140,7 +158,7 @@ class App extends React.Component {
   handleTabChange = (value) => {
     const userPositionInQueue = this.getUserPositionInQueue()
 
-    if ( userPositionInQueue < 0 || value !== 'calc' ) {
+    if ( ( userPositionInQueue < 0 || value !== 'calc' ) && !this.state.isDown ) {
       this.setState({
         currentTab: value,
       })
@@ -176,6 +194,7 @@ class App extends React.Component {
               iconElementRight={
                 <h4 className="align-items-center d-flex font-weight-normal h-100 mb-0 mr-3 text-white">
                   {this.state.username ? `Hi ${this.state.username}!`: null}
+                  <strong>{ this.state.isDown }</strong>
                 </h4>
               }
             />
@@ -188,10 +207,10 @@ class App extends React.Component {
               (
               <div>
                 <Tabs
-                    value={this.state.currentTab}
+                    value={this.state.isDown ? 'live' : this.state.currentTab}
                     onChange={this.handleTabChange}
                   >
-                  <Tab label="See robot's log" value="log">
+                  <Tab label="See robot's log" value="log" className={ this.state.isDown ? 'disabled-tab' : ''}>
                     <Logs
                       queue={ this.state.queue }
                       robotSteps={ this.state.robotSteps }
@@ -199,7 +218,7 @@ class App extends React.Component {
                       errorText={ this.state.evaluateError }
                     />
                   </Tab>
-                  <Tab label="Enter own equation" value="calc" className={ isUserInQueue ? 'disabled-tab' : ''}>
+                  <Tab label="Enter own equation" value="calc" className={ isUserInQueue || this.state.isDown ? 'disabled-tab' : ''}>
                     <Calculator
                       onEquationSubmit={this.onEquationSubmit}
                     />
@@ -212,9 +231,9 @@ class App extends React.Component {
             )
           }
           <Snackbar
-            open={this.state.openSnackbar}
-            message={this.state.snackbarMessage}
-            autoHideDuration={4000}
+            open={this.state.openSnackbar || this.state.isDown}
+            message={this.state.isDown ? 'Sorry but the robot is not feeling well 🤒' : this.state.snackbarMessage}
+            autoHideDuration={this.state.isDown ? -1 : 4000}
             onRequestClose={this.closeSnackabar}
           />
           </div>

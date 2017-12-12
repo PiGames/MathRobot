@@ -6,6 +6,8 @@ import { white } from 'material-ui/styles/colors'
 import { Card, CardHeader } from 'material-ui/Card'
 import Cached from 'material-ui/svg-icons/action/cached'
 import ActionDone from 'material-ui/svg-icons/action/done'
+import Warning from 'material-ui/svg-icons/alert/warning'
+import { red500 } from 'material-ui/styles/colors'
 
 import DoneStep from './DoneStep.jsx'
 import styles from './styles'
@@ -24,7 +26,7 @@ export default class Logs extends React.Component {
         return item
       }
 
-      const item = ( <ListItem key={ 'caching' } leftIcon={<Cached className="spin-animation" />}>{lastStep.msg}</ListItem> )
+      const item = ( <ListItem key={ 'caching' } leftIcon={ lastStep.type === 'error' ? <Warning color={red500} /> : <Cached className="spin-animation" />}>{lastStep.msg}</ListItem> )
 
       if ( this.props.robotSteps.length > 1 ) {
         return [
@@ -58,24 +60,28 @@ export default class Logs extends React.Component {
       }
 
       return (
-        <ListItem leftIcon={<ActionDone />} key={`step-${i}`}>{step.msg}</ListItem>
+        <ListItem leftIcon={ step.type === 'error' ? <Warning color={red500} /> : <ActionDone />} key={`step-${i}`}>{step.msg}</ListItem>
       )
     } )
   }
 
   renderQueue() {
     return this.props.queue.length ? (
-      <div className="py-3" style={ styles.chipWrapper }>
-      <h5>Users queue:</h5>
-      <div style={styles.usersContainer}>
-        {
-          this.props.queue.map(({user}, i)=>(
-              <div key={`user-${user.username}`} style={styles.user}>{i}. {user.username}</div>
-            ))
-        }
+      <div className="py-3">
+        <h5>Users queue:</h5>
+        <div style={styles.usersContainer}>
+          {
+            this.props.queue.map(({user}, i)=>(
+                <div key={`user-${user.username}-${i}`} style={styles.user}>{i}. {user.username}</div>
+              ))
+          }
+        </div>
       </div>
-    </div>
-    ):<h5>No users in the queue</h5>
+    ) : (
+      <div className="py-3">
+        <h5>No users in the queue</h5>
+      </div>
+    )
 
   }
 
