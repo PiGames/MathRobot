@@ -71,9 +71,9 @@ export default class Logs extends React.Component {
         <h5>Users queue:</h5>
         <div style={styles.usersContainer}>
           {
-            this.props.queue.map(({user}, i)=>(
-                <div key={`user-${user.username}-${i}`} style={styles.user}>{i + 1}. {user.username} ({user.mathml})</div>
-              ))
+            this.props.queue.map(({user, mathml}, i)=> (
+              <div key={`user-${user.username}-${i}`} style={styles.user}>{i + 1}. {user.username} ({mathml})</div>
+            ) )
           }
         </div>
       </div>
