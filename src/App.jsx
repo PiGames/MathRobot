@@ -34,7 +34,7 @@ class App extends React.Component {
       currentTab: 'log',
       userId: null,
       evaluateError: '',
-      showSignIn: false,
+      showSignIn: true,
       isDown: false,
     }
 
