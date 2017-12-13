@@ -10,6 +10,10 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 import { getUserPositionInQueue } from './utils/queueUtils.js'
 
+import renderTabHeader from './TabHeader.jsx'
+import LogIcon from 'material-ui/svg-icons/av/playlist-add-check'
+import EditorIcon from 'material-ui/svg-icons/content/create'
+import LiveIcon from 'material-ui/svg-icons/av/videocam'
 import Calculator from './Calculator/index.jsx'
 import SignIn from './SignIn/index.jsx'
 import Logs from './Logs/index.jsx'
@@ -30,7 +34,7 @@ class App extends React.Component {
       currentTab: 'log',
       userId: null,
       evaluateError: '',
-      showSignIn: true,
+      showSignIn: false,
       isDown: false,
     }
 
@@ -210,7 +214,7 @@ class App extends React.Component {
                     value={this.state.isDown ? 'live' : this.state.currentTab}
                     onChange={this.handleTabChange}
                   >
-                  <Tab label="See robot's log" value="log" className={ this.state.isDown ? 'disabled-tab' : ''}>
+                  <Tab label={renderTabHeader('See robot\'s log', LogIcon)} value="log" className={ this.state.isDown ? 'disabled-tab' : ''}>
                     <Logs
                       queue={ this.state.queue }
                       robotSteps={ this.state.robotSteps }
@@ -218,12 +222,12 @@ class App extends React.Component {
                       errorText={ this.state.evaluateError }
                     />
                   </Tab>
-                  <Tab label="Enter own equation" value="calc" className={ isUserInQueue || this.state.isDown ? 'disabled-tab' : ''}>
+                  <Tab label={renderTabHeader('Enter own equation', EditorIcon)} value="calc" className={ isUserInQueue || this.state.isDown ? 'disabled-tab' : ''}>
                     <Calculator
                       onEquationSubmit={this.onEquationSubmit}
                     />
                   </Tab>
-                  <Tab label="See robot live" value="live">
+                  <Tab label={renderTabHeader('See robot live', LiveIcon)} value="live">
                     <LiveStream />
                   </Tab>
                 </Tabs>
